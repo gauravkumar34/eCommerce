@@ -71,27 +71,23 @@ const Signup = () => {
     </form>
   );
 
-  const showError = () => {
-    return (
-      <div
-        className="alert alert-danger"
-        style={{ display: error ? " " : "none" }}
-      >
-        {error}
-      </div>
-    );
-  };
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
 
-  const showSuccess = () => {
-    return (
-      <div
-        className="alert alert-info"
-        style={{ display: success ? "" : "none" }}
-      >
-        New account is created. Please <Link to="/signin">Signin</Link>
-      </div>
-    );
-  };
+  const showSuccess = () => (
+    <div
+      className="alert alert-info"
+      style={{ display: success ? "" : "none" }}
+    >
+      New account is created. Please <Link to="/signin">Signin</Link>
+    </div>
+  );
 
   return (
     <div>

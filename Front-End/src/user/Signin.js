@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
-import { Link, Redirect } from "react-router-dom";
-import { signin } from "../auth";
+import { Redirect } from "react-router-dom";
+import { signin, authenticate, isAuthenticate } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
-    name: "",
     email: "",
     password: "",
     error: "",
@@ -13,7 +12,7 @@ const Signin = () => {
     redirectToReferrer: false,
   });
   const { email, password, loading, error, redirectToReferrer } = values;
-
+  const { user } = isAuthenticate();
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
@@ -25,14 +24,16 @@ const Signin = () => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        setValues({
-          ...values,
-          redirectToReferrer: true,
+        authenticate(data, () => {
+          setValues({
+            ...values,
+            redirectToReferrer: true,
+          });
         });
       }
     });
   };
-  const signUpForm = () => (
+  const signInForm = () => (
     <form>
       <div className="form-group">
         <label className="text-muted">Email</label>
@@ -78,6 +79,13 @@ const Signin = () => {
     );
   const redirectUser = () => {
     if (redirectToReferrer) {
+      if (user && user.role === 1) {
+        return <Redirect to="/admin/dashboard" />;
+      } else {
+        return <Redirect to="/user/dashboard" />;
+      }
+    }
+    if (isAuthenticate()) {
       return <Redirect to="/" />;
     }
   };
@@ -85,13 +93,13 @@ const Signin = () => {
   return (
     <div>
       <Layout
-        title="SignUp Page"
+        title="Signin Page"
         description="Node React E-commerce App"
         className="container col-md-8 offset-md-2"
       >
         {snowLoading()}
         {showError()}
-        {signUpForm()}
+        {signInForm()}
         {redirectUser()}
       </Layout>
     </div>
