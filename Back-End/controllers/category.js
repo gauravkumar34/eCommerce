@@ -51,7 +51,7 @@ exports.remove = (req, res) => {
       });
     }
     res.json({
-      message: "Category Deleted",
+      message: "Category Deleted ",
     });
   });
 };
