@@ -20,6 +20,7 @@ const Home = () => {
 
   const loadProductsByArrival = () => {
     getProducts("createdAt").then((data) => {
+      // console.log({ data });
       if (data.error) {
         setError(data.error);
       } else {
@@ -41,6 +42,7 @@ const Home = () => {
     >
       <h2 className="mb-4">New Arrivals</h2>
       <div className="row">
+        {/* {console.log({ productsByArrival })} */}
         {productsByArrival.map((product, i) => (
           <Card key={i} product={product} />
         ))}

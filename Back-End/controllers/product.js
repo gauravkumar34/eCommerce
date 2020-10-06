@@ -5,6 +5,7 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 const Product = require("../models/product");
 
 exports.productById = (req, res, next, id) => {
+  console.log("RUN");
   Product.findById(id).exec((err, product) => {
     if (err || !product) {
       return res.status(400).json({
@@ -140,15 +141,17 @@ exports.update = (req, res) => {
  */
 
 exports.list = (req, res) => {
+  // const { order, sortBy, limit } = req.query;
+
   let order = req.query.order ? req.query.order : "asc";
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
   let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
   Product.find()
     .select("-photo")
-    .populate("category")
+    .populate("Category")
     .sort([[sortBy, order]])
-    .limit(limit)
+    .limit(parseInt(limit))
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
