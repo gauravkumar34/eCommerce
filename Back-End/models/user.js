@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const { v1: uuidv1 } = require("uuid");
-//tessdst u[pdate passkey
+
 const userSchema = new mongoose.Schema(
   {
     name: {
